@@ -1,0 +1,40 @@
+[project]
+name = "station-cycle-vision"
+version = "0.1.0"
+description = "Work steps, cycle times and deviations from overhead video of assembly stations, on the edge"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=2.0",
+  "scipy>=1.13",
+  "opencv-python-headless>=4.10",
+  "pyyaml>=6",
+  "onnxruntime>=1.20",
+]
+
+[project.optional-dependencies]
+train = ["torch>=2.4", "onnx>=1.17", "mlflow-skinny>=2.16"]
+service = ["fastapi>=0.115", "uvicorn>=0.30", "prometheus-client>=0.20"]
+dev = ["pytest>=8", "ruff>=0.6", "httpx>=0.27"]
+
+[project.scripts]
+scv = "scv.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["slow: trains models (minutes)"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 130
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "NPY"]
+ignore = ["E501", "E741"]

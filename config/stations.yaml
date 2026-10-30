@@ -1,0 +1,48 @@
+# Assembly stations as an overhead camera sees them. Coordinates are in a 96 x 96 world (pixels of
+# the bench before the camera); the camera maps the world to a 64 x 64 frame. Each station has its
+# own layout, standard work (the sequence of steps one cycle should follow), camera and lighting.
+fps: 5
+steps: [idle, pick_base, place_base, pick_screw, fasten, inspect, unload]
+
+# nominal step durations (seconds) for an average worker; each worker has a speed factor and each
+# step instance a lognormal jitter
+durations:
+  pick_base: 1.4
+  place_base: 1.6
+  pick_screw: 1.0
+  fasten: 2.4
+  inspect: 2.0
+  unload: 1.6
+  idle_between_cycles: [0.4, 3.0]
+worker_speed: [0.8, 1.25]
+duration_jitter: 0.2
+
+# per cycle, the chance a worker deviates from the standard work
+deviations:
+  missing: 0.08      # one fastening (pick_screw + fasten) left out
+  order: 0.06        # two adjacent steps swapped
+  extra: 0.06        # one fastening repeated (rework)
+  pause: 0.08        # a 3-8 s idle inside the cycle (not a deviation, but it lengthens the cycle)
+
+stations:
+  S1:
+    layout: {base_bin: [16, 30], screw_bin: [80, 22], fixture: [48, 44], output: [82, 70], tool_rest: [70, 44], rest_left: [32, 86], rest_right: [64, 86]}
+    standard_work: [pick_base, place_base, pick_screw, fasten, pick_screw, fasten, inspect, unload]
+    bench: [0.55, 0.47, 0.38]
+  S2:
+    layout: {base_bin: [80, 28], screw_bin: [18, 20], fixture: [46, 48], output: [14, 72], tool_rest: [28, 46], rest_left: [34, 86], rest_right: [62, 86]}
+    standard_work: [pick_base, place_base, pick_screw, fasten, pick_screw, fasten, pick_screw, fasten, unload]
+    bench: [0.42, 0.45, 0.48]
+  S3:
+    layout: {base_bin: [20, 62], screw_bin: [76, 64], fixture: [48, 34], output: [82, 30], tool_rest: [62, 22], rest_left: [30, 88], rest_right: [66, 88]}
+    standard_work: [pick_base, place_base, inspect, pick_screw, fasten, pick_screw, fasten, unload]
+    bench: [0.60, 0.58, 0.52]
+  S4:
+    layout: {base_bin: [14, 20], screw_bin: [48, 14], fixture: [50, 52], output: [84, 52], tool_rest: [76, 30], rest_left: [36, 88], rest_right: [60, 88]}
+    standard_work: [pick_base, place_base, pick_screw, fasten, inspect, pick_screw, fasten, unload]
+    bench: [0.36, 0.40, 0.36]
+  # a fifth station used only to test onboarding a new station with few labels
+  S5:
+    layout: {base_bin: [82, 64], screw_bin: [16, 60], fixture: [48, 40], output: [16, 24], tool_rest: [80, 30], rest_left: [36, 88], rest_right: [60, 88]}
+    standard_work: [pick_base, place_base, pick_screw, fasten, pick_screw, fasten, pick_screw, fasten, inspect, unload]
+    bench: [0.50, 0.44, 0.40]

@@ -1,0 +1,22 @@
+# Mirrored rework station on a gearbox-cover line: the screw bin sits low on the left and the base
+# plates come from a far-right gravity rack, finished plates go to a far-left tray, and the
+# screwdriver rests right of the fixture. Each cover takes three screws, and a seating check
+# (inspect) happens straight after placing, before any screw goes in. The camera is clamped
+# off-centre to a gantry above the aisle, so the view is rotated, tilted and a bit zoomed out.
+# Light is uneven (a window on one side, a dim overhead LED), the sensor is cheap and drops frames
+# on the shared network, and colleagues walk through the view a few times a minute.
+station:
+  layout: {base_bin: [76, 22], screw_bin: [20, 52], fixture: [50, 56], output: [18, 20], tool_rest: [78, 58], rest_left: [30, 84], rest_right: [68, 84]}
+  standard_work: [pick_base, place_base, inspect, pick_screw, fasten, pick_screw, fasten, pick_screw, fasten, unload]
+  bench: [0.32, 0.42, 0.36]   # grey-green ESD mat
+conditions:
+  rotation_deg: [3, 9]
+  scale: [0.88, 0.98]
+  shift: [-4, 4]
+  tilt: [0.08, 0.16]
+  gain: [0.75, 1.0]
+  tint: [0.9, 1.08]
+  vignette: [0.15, 0.35]
+  noise: [0.025, 0.05]
+  occlusions_per_minute: [1, 3]
+  frame_drop: [0.02, 0.08]

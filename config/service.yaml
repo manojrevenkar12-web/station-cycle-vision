@@ -1,0 +1,12 @@
+# The edge service (one process per camera box) and the anonymiser.
+anonymise:
+  threshold: 0.3        # person-mask probability above which a pixel is pixelated (low on purpose)
+  dilate_px: 1          # grow the mask before pixelating
+  block_px: 8
+stream:
+  max_frames_per_request: 300
+  sessions_max: 16      # stations one box serves
+events:
+  database: data/events.sqlite
+clips:
+  keep_seconds: 6       # anonymised clip kept around each deviation, for root-cause analysis

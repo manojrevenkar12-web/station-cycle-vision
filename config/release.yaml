@@ -1,0 +1,16 @@
+# The release gate (`scv gate`), read against reports/results.json.
+#
+# `targets` were written before the first full run, as what a deployment should reach on stations
+# the models were trained on (bench recording conditions). A target that a run misses is reported,
+# never lowered to make the gate pass. `floors` are what CI enforces; they are filled in from the
+# first full run with a margin, as regression guards.
+targets:
+  cycle_recall: 0.95            # cycles found (IoU >= 0.5 with a true cycle)
+  cycle_time_mae_s: 1.0         # mean absolute error of the cycle time
+  deviation_recall: 0.80        # cycles with a missing/extra/out-of-order step that are flagged
+  deviation_precision: 0.80
+  leak_rate: 0.01               # person pixels left visible after anonymisation
+  int8_agreement: 0.98          # int8 encoder: same frame label as float
+  edge_ms_per_frame: 20.0       # one core, encoder + streaming TCN
+
+floors: {}
