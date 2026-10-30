@@ -78,7 +78,10 @@ class CausalStage(nn.Module):
 class CausalTCN(nn.Module):
     def __init__(self, n_classes: int, hidden: int = 64, layers: int = 8, stages: int = 2) -> None:
         super().__init__()
-        self.stages = nn.ModuleList([CausalStage(FEAT, hidden, layers, n_classes)] + [CausalStage(n_classes, hidden, layers, n_classes) for _ in range(stages - 1)])
+        self.stages = nn.ModuleList(
+            [CausalStage(FEAT, hidden, layers, n_classes)]
+            + [CausalStage(n_classes, hidden, layers, n_classes) for _ in range(stages - 1)]
+        )
 
     @property
     def receptive_field(self) -> int:

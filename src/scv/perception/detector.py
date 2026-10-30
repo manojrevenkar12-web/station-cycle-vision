@@ -39,7 +39,9 @@ class Detector(nn.Module):
         return heat, off, self.mask(u)[:, 0]
 
 
-def gaussian_targets(points: np.ndarray, visible: np.ndarray, stride: int = 4, sigma: float = 1.0) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+def gaussian_targets(
+    points: np.ndarray, visible: np.ndarray, stride: int = 4, sigma: float = 1.0
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """points (N, P, 2) image coords -> heatmap (N, H, W), offset (N, 2, H, W), offset mask (N, H, W)."""
     n = len(points)
     g = SIZE // stride

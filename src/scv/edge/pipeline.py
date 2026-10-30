@@ -23,7 +23,9 @@ from .export import EdgeModels, export_all
 
 def live_cycles(labels: np.ndarray, standard: list[str], fps: int, hold: int) -> list[FoundCycle]:
     ev = run_live(labels, standard, fps, hold)
-    return [FoundCycle(e["start_frame"], e["end_frame"], e["steps"], e["deviations"]) for e in ev if e["type"] == "cycle_completed"]
+    return [
+        FoundCycle(e["start_frame"], e["end_frame"], e["steps"], e["deviations"]) for e in ev if e["type"] == "cycle_completed"
+    ]
 
 
 def run_edge(profile: str = "full", log=print) -> dict[str, Any]:
@@ -54,8 +56,15 @@ def run_edge(profile: str = "full", log=print) -> dict[str, Any]:
                 labs[name].append(np.array([int(np.argmax(m.step(f, s))) for f in e.frames]))
         agree = float(np.mean(np.concatenate([a == b for a, b in zip(labs["float"], labs["int8"], strict=True)])))
         seg = [M.segmentation(p, e.labels) for p, e in zip(labs["int8"], eps, strict=True)]
-        proc = [M.process_metrics(live_cycles(p, standard_of(e), fps, hold), e.cycles, fps) for p, e in zip(labs["int8"], eps, strict=True)]
-        row = {"int8_float_agreement": agree, **{k: float(np.mean([x[k] for x in seg])) for k in seg[0]}, **M.summarise_process(proc)}
+        proc = [
+            M.process_metrics(live_cycles(p, standard_of(e), fps, hold), e.cycles, fps)
+            for p, e in zip(labs["int8"], eps, strict=True)
+        ]
+        row = {
+            "int8_float_agreement": agree,
+            **{k: float(np.mean([x[k] for x in seg])) for k in seg[0]},
+            **M.summarise_process(proc),
+        }
         per[d] = row
 
     log("[edge] latency and anonymised clips")

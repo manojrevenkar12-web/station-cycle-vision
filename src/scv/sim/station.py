@@ -78,7 +78,11 @@ def plan_cycle(sw: tuple[str, ...], dev_cfg: dict[str, float], rng: np.random.Ge
         devs.append("missing")
     if rng.uniform() < dev_cfg["order"]:
         # swap two adjacent steps that differ, never moving pick_base or unload
-        cand = [i for i in range(1, len(steps) - 2) if steps[i] != steps[i + 1] and not (steps[i] == "pick_screw" and steps[i + 1] == "fasten")]
+        cand = [
+            i
+            for i in range(1, len(steps) - 2)
+            if steps[i] != steps[i + 1] and not (steps[i] == "pick_screw" and steps[i + 1] == "fasten")
+        ]
         if cand:
             i = int(rng.choice(cand))
             steps[i], steps[i + 1] = steps[i + 1], steps[i]
@@ -93,7 +97,9 @@ def plan_cycle(sw: tuple[str, ...], dev_cfg: dict[str, float], rng: np.random.Ge
     return steps, devs, pause
 
 
-def schedule(station: Station, cfg: dict[str, Any], seconds: float, rng: np.random.Generator) -> tuple[list[Segment], list[Cycle], float]:
+def schedule(
+    station: Station, cfg: dict[str, Any], seconds: float, rng: np.random.Generator
+) -> tuple[list[Segment], list[Cycle], float]:
     """Segments covering [0, seconds) and the cycles completed in them. Returns the worker speed too."""
     durs = cfg["durations"]
     speed = float(rng.uniform(*cfg["worker_speed"]))

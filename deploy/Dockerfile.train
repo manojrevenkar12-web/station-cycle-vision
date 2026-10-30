@@ -1,0 +1,13 @@
+# Training and evaluation: CPU PyTorch, MLflow, the whole pipeline (`scv all`).
+FROM python:3.12.13-slim AS train
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 SCV_ROOT=/app MLFLOW_DISABLE_AGENT_HINT=1
+WORKDIR /app
+RUN pip install torch --index-url https://download.pytorch.org/whl/cpu
+COPY pyproject.toml ./
+COPY src ./src
+RUN pip install ".[train]" sqlalchemy alembic
+COPY config ./config
+COPY heldout ./heldout
+RUN useradd --uid 10001 --create-home scv && mkdir -p /app/runs /app/reports /app/models /app/docs && chown -R scv /app
+USER 10001
+CMD ["scv", "all", "--profile", "quick"]

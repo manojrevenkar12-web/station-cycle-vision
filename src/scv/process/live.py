@@ -58,7 +58,9 @@ class LiveProcess:
         return events
 
     def _close(self, step: int, start: int, end: int) -> list[dict[str, Any]]:
-        events: list[dict[str, Any]] = [{"type": "step_ended", "frame": end, "step": STEPS[step], "seconds": (end - start) / self.fps}]
+        events: list[dict[str, Any]] = [
+            {"type": "step_ended", "frame": end, "step": STEPS[step], "seconds": (end - start) / self.fps}
+        ]
         name = STEPS[step]
         if step == IDLE:
             return events
@@ -68,14 +70,16 @@ class LiveProcess:
             self.cycle_steps.append(name)
             if name == "unload":
                 devs = deviations(self.cycle_steps, self.standard)
-                events.append({
-                    "type": "cycle_completed",
-                    "start_frame": self.cycle_start,
-                    "end_frame": end,
-                    "cycle_time_s": (end - self.cycle_start) / self.fps,
-                    "steps": list(self.cycle_steps),
-                    "deviations": devs,
-                })
+                events.append(
+                    {
+                        "type": "cycle_completed",
+                        "start_frame": self.cycle_start,
+                        "end_frame": end,
+                        "cycle_time_s": (end - self.cycle_start) / self.fps,
+                        "steps": list(self.cycle_steps),
+                        "deviations": devs,
+                    }
+                )
                 self.cycle_steps, self.cycle_start = [], None
         return events
 

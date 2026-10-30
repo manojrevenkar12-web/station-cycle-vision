@@ -43,7 +43,9 @@ def augment_batch(x: torch.Tensor, spec: dict[str, Any], g: torch.Generator) -> 
 def _stack_index(eps: list[Episode]) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """All frames as uint8 plus, for each frame, the index of t-1 and t-2 within its own recording."""
     frames = np.concatenate([e.frames for e in eps])
-    starts = np.concatenate([np.full(len(e.frames), s) for e, s in zip(eps, np.cumsum([0] + [len(e.frames) for e in eps[:-1]]), strict=True)])
+    starts = np.concatenate(
+        [np.full(len(e.frames), s) for e, s in zip(eps, np.cumsum([0] + [len(e.frames) for e in eps[:-1]]), strict=True)]
+    )
     i = np.arange(len(frames))
     return frames, i, np.maximum(i - 1, starts), np.maximum(i - 2, starts)
 
@@ -88,8 +90,14 @@ def encode(model: FrameEncoder, ep: Episode, batch: int = 512) -> np.ndarray:
     return torch.cat([model.features(x[i : i + batch]) for i in range(0, len(x), batch)]).numpy()
 
 
-def train_temporal(model: torch.nn.Module, seqs: list[tuple[np.ndarray, np.ndarray]], cfg: dict[str, Any], epochs: int, seed: int,
-                   crop: int = 400) -> torch.nn.Module:
+def train_temporal(
+    model: torch.nn.Module,
+    seqs: list[tuple[np.ndarray, np.ndarray]],
+    cfg: dict[str, Any],
+    epochs: int,
+    seed: int,
+    crop: int = 400,
+) -> torch.nn.Module:
     """Whole recordings as sequences; a random crop per step keeps batches small and varied."""
     torch.manual_seed(seed)
     rng = np.random.default_rng(seed)

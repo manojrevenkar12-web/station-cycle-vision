@@ -20,9 +20,9 @@ def export_all(run_dir: Path, out: Path, k: int) -> dict[str, Any]:
     import torch
     from onnxruntime.quantization import CalibrationDataReader, QuantFormat, QuantType, quantize_static
 
+    from .. import config
     from ..perception.detector import Detector
     from ..temporal.models import CausalTCN, FrameEncoder, stack_frames
-    from .. import config
     from .stream import StreamingTCN
 
     out.mkdir(parents=True, exist_ok=True)
@@ -55,16 +55,38 @@ def export_all(run_dir: Path, out: Path, k: int) -> dict[str, Any]:
             return torch.sigmoid(h), o, torch.sigmoid(m)
 
     x9 = torch.zeros(1, 9, 64, 64)
-    torch.onnx.export(Feat(), (x9,), str(out / "encoder.onnx"), input_names=["frames"], output_names=["features"],
-                      dynamic_axes={"frames": {0: "n"}, "features": {0: "n"}}, opset_version=17, dynamo=False)
+    torch.onnx.export(
+        Feat(),
+        (x9,),
+        str(out / "encoder.onnx"),
+        input_names=["frames"],
+        output_names=["features"],
+        dynamic_axes={"frames": {0: "n"}, "features": {0: "n"}},
+        opset_version=17,
+        dynamo=False,
+    )
     st = StreamingTCN(tcn).eval()
     state = st.init_state()
     names = [f"{STATE_PREFIX}{i}" for i in range(len(state))]
-    torch.onnx.export(st, (torch.zeros(1, 128), *state), str(out / "tcn_step.onnx"), input_names=["features", *names],
-                      output_names=["logits", *[f"new_{n}" for n in names]], opset_version=17, dynamo=False)
-    torch.onnx.export(DetOut(), (torch.zeros(1, 3, 64, 64),), str(out / "detector.onnx"), input_names=["frame"],
-                      output_names=["heat", "offset", "person"], dynamic_axes={"frame": {0: "n"}, "heat": {0: "n"}, "offset": {0: "n"}, "person": {0: "n"}},
-                      opset_version=17, dynamo=False)
+    torch.onnx.export(
+        st,
+        (torch.zeros(1, 128), *state),
+        str(out / "tcn_step.onnx"),
+        input_names=["features", *names],
+        output_names=["logits", *[f"new_{n}" for n in names]],
+        opset_version=17,
+        dynamo=False,
+    )
+    torch.onnx.export(
+        DetOut(),
+        (torch.zeros(1, 3, 64, 64),),
+        str(out / "detector.onnx"),
+        input_names=["frame"],
+        output_names=["heat", "offset", "person"],
+        dynamic_axes={"frame": {0: "n"}, "heat": {0: "n"}, "offset": {0: "n"}, "person": {0: "n"}},
+        opset_version=17,
+        dynamo=False,
+    )
 
     calib = np.load(run_dir / "calibration.npz")["frames"]
     xs = stack_frames(torch.from_numpy(calib)).numpy()
@@ -76,10 +98,22 @@ def export_all(run_dir: Path, out: Path, k: int) -> dict[str, Any]:
         def get_next(self):  # noqa: ANN201
             return next(self.it, None)
 
-    quantize_static(str(out / "encoder.onnx"), str(out / "encoder.int8.onnx"), Reader(), quant_format=QuantFormat.QDQ,
-                    per_channel=True, activation_type=QuantType.QInt8, weight_type=QuantType.QInt8)
-    manifest = {"classes": k, "state": [list(s) for s in st.shapes], "stack": 3, "size": 64,
-                "files": {p.name: p.stat().st_size for p in sorted(out.glob("*.onnx"))}}
+    quantize_static(
+        str(out / "encoder.onnx"),
+        str(out / "encoder.int8.onnx"),
+        Reader(),
+        quant_format=QuantFormat.QDQ,
+        per_channel=True,
+        activation_type=QuantType.QInt8,
+        weight_type=QuantType.QInt8,
+    )
+    manifest = {
+        "classes": k,
+        "state": [list(s) for s in st.shapes],
+        "stack": 3,
+        "size": 64,
+        "files": {p.name: p.stat().st_size for p in sorted(out.glob("*.onnx"))},
+    }
     (out / "manifest.json").write_text(json.dumps(manifest, indent=1))
     return manifest
 

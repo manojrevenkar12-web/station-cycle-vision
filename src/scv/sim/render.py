@@ -93,10 +93,16 @@ class Renderer:
         grain = cv2.GaussianBlur(rng.normal(0, 0.04, (WORLD, WORLD)), (0, 0), sigmaX=6, sigmaY=0.8)
         img = base + grain[..., None]
         # bins, fixture and output tray are fixed furniture
-        for key, colour, size in [("base_bin", (0.25, 0.3, 0.35), (16, 14)), ("screw_bin", (0.3, 0.3, 0.3), (12, 10)),
-                                  ("output", (0.2, 0.32, 0.22), (20, 16)), ("fixture", (0.22, 0.22, 0.24), (24, 18))]:
+        for key, colour, size in [
+            ("base_bin", (0.25, 0.3, 0.35), (16, 14)),
+            ("screw_bin", (0.3, 0.3, 0.3), (12, 10)),
+            ("output", (0.2, 0.32, 0.22), (20, 16)),
+            ("fixture", (0.22, 0.22, 0.24), (24, 18)),
+        ]:
             x, y = self.L[key]
-            cv2.rectangle(img, (int(x - size[0] / 2), int(y - size[1] / 2)), (int(x + size[0] / 2), int(y + size[1] / 2)), colour, -1)
+            cv2.rectangle(
+                img, (int(x - size[0] / 2), int(y - size[1] / 2)), (int(x + size[0] / 2), int(y + size[1] / 2)), colour, -1
+            )
         # stock in the bins
         bx, by = self.L["base_bin"]
         for i in range(3):
@@ -115,8 +121,17 @@ class Renderer:
             p = centre + self.slots[k] * scale
             cv2.circle(img, (int(p[0]), int(p[1])), 1, (0.9, 0.82, 0.25), -1)
 
-    def frame(self, hands: np.ndarray, tool: np.ndarray, tool_held: bool, plate_at: np.ndarray | None, plate_scale: float,
-              screws: int, stack: int, passers: list[np.ndarray]) -> tuple[np.ndarray, np.ndarray]:
+    def frame(
+        self,
+        hands: np.ndarray,
+        tool: np.ndarray,
+        tool_held: bool,
+        plate_at: np.ndarray | None,
+        plate_scale: float,
+        screws: int,
+        stack: int,
+        passers: list[np.ndarray],
+    ) -> tuple[np.ndarray, np.ndarray]:
         img = self.bench.copy()
         mask = np.zeros((WORLD, WORLD), dtype=np.uint8)
         ox, oy = self.L["output"]
@@ -140,15 +155,26 @@ class Renderer:
             cv2.ellipse(img, (int(p[0]), int(p[1])), (14, 9), 0, 0, 360, (0.18, 0.18, 0.2), -1)
             cv2.circle(img, (int(p[0]), int(p[1])), 5, (0.12, 0.09, 0.07), -1)
             cv2.ellipse(mask, (int(p[0]), int(p[1])), (14, 9), 0, 0, 360, 1, -1)
-        cam = cv2.warpPerspective(img.astype(np.float32), self.H, (SIZE, SIZE), flags=cv2.INTER_AREA, borderMode=cv2.BORDER_REFLECT)
+        cam = cv2.warpPerspective(
+            img.astype(np.float32), self.H, (SIZE, SIZE), flags=cv2.INTER_AREA, borderMode=cv2.BORDER_REFLECT
+        )
         m = cv2.warpPerspective(mask, self.H, (SIZE, SIZE), flags=cv2.INTER_NEAREST, borderValue=0)
         cam = cam * self.gain * self.tint * self.vig
         cam = cam + self.rng.normal(0, self.noise, cam.shape)
         return (np.clip(cam, 0, 1) * 255).astype(np.uint8), m.astype(bool)
 
 
-def render_episode(station: Station, segs: list[Segment], cycles: list[Cycle], seconds: float, fps: int,
-                   dom_name: str, dom: dict[str, Any], rng: np.random.Generator, speed: float) -> Episode:
+def render_episode(
+    station: Station,
+    segs: list[Segment],
+    cycles: list[Cycle],
+    seconds: float,
+    fps: int,
+    dom_name: str,
+    dom: dict[str, Any],
+    rng: np.random.Generator,
+    speed: float,
+) -> Episode:
     r = Renderer(station, dom, rng)
     L = r.L
     n = int(seconds * fps)

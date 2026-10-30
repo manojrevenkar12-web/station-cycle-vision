@@ -97,7 +97,14 @@ def align(seq: list[str], standard: list[str]) -> tuple[int, list[tuple[str, str
     ops: list[tuple[str, str | None, str | None]] = []
     i, j = n, m
     while i > 0 or j > 0:
-        if i > 1 and j > 1 and seq[i - 1] == standard[j - 2] and seq[i - 2] == standard[j - 1] and seq[i - 1] != seq[i - 2] and d[i, j] == d[i - 2, j - 2] + 1:
+        if (
+            i > 1
+            and j > 1
+            and seq[i - 1] == standard[j - 2]
+            and seq[i - 2] == standard[j - 1]
+            and seq[i - 1] != seq[i - 2]
+            and d[i, j] == d[i - 2, j - 2] + 1
+        ):
             ops.append(("swap", seq[i - 1], standard[j - 1]))
             i, j = i - 2, j - 2
         elif i > 0 and j > 0 and d[i, j] == d[i - 1, j - 1] + (seq[i - 1] != standard[j - 1]):

@@ -8,7 +8,7 @@ profiles:
     onboarding_episodes: 3   # new station S5: test recordings
     heldout_episodes: 4
     encoder_epochs: 6
-    detector_epochs: 4
+    detector_epochs: 6
     temporal_epochs: 60
   quick:
     train_episodes: 1
@@ -43,7 +43,7 @@ detector:
   batch: 64
   lr: 0.002
   stride: 4
-  peak_threshold: 0.3
+  threshold_grid: [0.05, 0.1, 0.15, 0.2, 0.25, 0.3]   # peak threshold chosen on validation recordings
   frame_stride: 2         # train on every 2nd frame (neighbouring frames are near duplicates)
   match_px: 3.0
 tracker:

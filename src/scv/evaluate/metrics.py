@@ -105,12 +105,24 @@ def process_metrics(found: list[FoundCycle], truth: list[Cycle], fps: int) -> di
 
 def summarise_process(rows: list[dict[str, Any]]) -> dict[str, float]:
     """Pool episode-level process metrics into rates."""
-    s = {k: sum(r[k] for r in rows) for k in ("cycles_true", "cycles_found", "cycles_matched", "deviation_true", "deviation_flagged", "deviation_tp", "deviation_typed_right")}
+    s = {
+        k: sum(r[k] for r in rows)
+        for k in (
+            "cycles_true",
+            "cycles_found",
+            "cycles_matched",
+            "deviation_true",
+            "deviation_flagged",
+            "deviation_tp",
+            "deviation_typed_right",
+        )
+    }
     maes = [r["cycle_time_mae_s"] * r["cycles_matched"] for r in rows if r["cycles_matched"]]
     return {
         "cycle_recall": s["cycles_matched"] / max(s["cycles_true"], 1),
         "cycle_precision": s["cycles_matched"] / max(s["cycles_found"], 1),
-        "cycle_time_mae_s": sum(maes) / max(s["cycles_matched"], 1),
+        # no matched cycle: no cycle-time error to report (None, not 0)
+        "cycle_time_mae_s": sum(maes) / s["cycles_matched"] if s["cycles_matched"] else None,
         "deviation_recall": s["deviation_tp"] / max(s["deviation_true"], 1),
         "deviation_precision": s["deviation_tp"] / max(s["deviation_flagged"], 1),
         "deviation_type_accuracy": s["deviation_typed_right"] / max(s["deviation_tp"], 1),

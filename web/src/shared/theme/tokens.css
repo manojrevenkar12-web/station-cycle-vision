@@ -1,0 +1,95 @@
+/*
+ * Tokens. A dashboard read on a shop floor and in a production meeting: signage type (Barlow and
+ * Barlow Condensed, after DIN), a pale grey-green ground like a painted floor, and one colour per
+ * work step, the same in every chart. Safety orange is reserved for deviations from standard work.
+ */
+@import '@fontsource/barlow/400.css';
+@import '@fontsource/barlow/600.css';
+@import '@fontsource/barlow-condensed/500.css';
+@import '@fontsource/barlow-condensed/700.css';
+
+:root {
+  --font-body: 'Barlow', system-ui, sans-serif;
+  --font-sign: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
+
+  --ground: #eef0ea;
+  --panel: #fafbf7;
+  --sunken: #e2e5dc;
+  --ink: #1b1f1a;
+  --ink-soft: #4f5a4d;
+  --rule: #c9cfc2;
+  --focus: #1c5bd6;
+
+  --deviation: #c2410c;
+  --conform: #2b7a3e;
+
+  /* work steps */
+  --s-idle: #c9cfc2;
+  --s-pick_base: #2f5d8a;
+  --s-place_base: #5b8fc7;
+  --s-pick_screw: #7a5a1e;
+  --s-fasten: #c99a2e;
+  --s-inspect: #6d4c8f;
+  --s-unload: #2f7d6d;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 40px;
+  --space-7: 64px;
+  --space-8: 104px;
+
+  --radius-s: 3px;
+  --radius-m: 8px;
+
+  --text-xs: 0.75rem;
+  --text-s: 0.875rem;
+  --text-m: 1rem;
+  --text-l: 1.5rem;
+  --text-xl: clamp(2.25rem, 5vw, 3.75rem);
+
+  --measure: 64ch;
+  --page: 1200px;
+  --tap: 44px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground: #121510;
+    --panel: #1a1e17;
+    --sunken: #0c0e0a;
+    --ink: #e8ebe3;
+    --ink-soft: #a7b0a2;
+    --rule: #333a30;
+    --focus: #8db3ff;
+    --deviation: #ff8a4c;
+    --conform: #6fcf8a;
+    --s-idle: #3a4136;
+    --s-pick_base: #6f9fd0;
+    --s-place_base: #9cc3ee;
+    --s-pick_screw: #c19a52;
+    --s-fasten: #f0c862;
+    --s-inspect: #b28fd6;
+    --s-unload: #5fc2ac;
+    color-scheme: dark;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--font-body); font-size: var(--text-m); line-height: 1.5; }
+h1, h2, h3 { font-family: var(--font-sign); font-weight: 700; line-height: 1.05; margin: 0; letter-spacing: 0.005em; }
+p { margin: 0; }
+button, select { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: var(--radius-s); }
+.num { font-family: var(--font-sign); font-variant-numeric: tabular-nums; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@keyframes shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+.skeleton { background: linear-gradient(90deg, var(--sunken) 30%, var(--panel) 50%, var(--sunken) 70%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; border-radius: var(--radius-s); }
+@media (prefers-reduced-motion: reduce) {
+  .skeleton { animation: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}

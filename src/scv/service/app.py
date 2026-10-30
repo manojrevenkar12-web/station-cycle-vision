@@ -102,9 +102,13 @@ def create_app(model_dir: Path | None = None, db_path: Path | None = None, clips
     app = FastAPI(title="station-cycle-vision edge", version="1.0")
     reg = CollectorRegistry()
     m_frames = Counter("scv_frames_total", "Frames processed", ["station"], registry=reg)
-    m_latency = Histogram("scv_frame_seconds", "Model time per frame", buckets=(0.0005, 0.001, 0.002, 0.005, 0.01, 0.02, 0.05), registry=reg)
+    m_latency = Histogram(
+        "scv_frame_seconds", "Model time per frame", buckets=(0.0005, 0.001, 0.002, 0.005, 0.01, 0.02, 0.05), registry=reg
+    )
     m_cycles = Counter("scv_cycles_total", "Cycles completed", ["station"], registry=reg)
-    m_devs = Counter("scv_deviations_total", "Cycles that deviated from standard work, by kind", ["station", "kind"], registry=reg)
+    m_devs = Counter(
+        "scv_deviations_total", "Cycles that deviated from standard work, by kind", ["station", "kind"], registry=reg
+    )
     m_ct = Gauge("scv_last_cycle_seconds", "Last cycle time", ["station"], registry=reg)
     store = Store(db_path)
     models: dict[str, EdgeModels] = {}
@@ -130,7 +134,12 @@ def create_app(model_dir: Path | None = None, db_path: Path | None = None, clips
         frames = np.stack(list(s.frames))
         mask = get_models().person_mask(frames)
         a = svc["anonymise"]
-        red = np.stack([pixelate(f, redact_mask(m, a["threshold"], a["dilate_px"]), a["block_px"]) for f, m in zip(frames, mask, strict=True)])
+        red = np.stack(
+            [
+                pixelate(f, redact_mask(m, a["threshold"], a["dilate_px"]), a["block_px"])
+                for f, m in zip(frames, mask, strict=True)
+            ]
+        )
         clip_id = uuid.uuid4().hex
         np.savez_compressed(clips_dir / f"{clip_id}.npz", frames=red, station=station)
         return clip_id
@@ -144,7 +153,9 @@ def create_app(model_dir: Path | None = None, db_path: Path | None = None, clips
         try:
             m = get_models()
         except Exception as e:  # noqa: BLE001
-            return Response(json.dumps({"status": "models not loaded", "error": str(e)}), status_code=503, media_type="application/json")
+            return Response(
+                json.dumps({"status": "models not loaded", "error": str(e)}), status_code=503, media_type="application/json"
+            )
         return Response(json.dumps({"status": "ready", "encoder": m.encoder_file}), media_type="application/json")
 
     @app.get("/metrics")
@@ -155,7 +166,9 @@ def create_app(model_dir: Path | None = None, db_path: Path | None = None, clips
     async def frames(station: str, request: Request) -> dict[str, Any]:
         body = await request.body()
         if len(body) == 0 or len(body) % FRAME_BYTES:
-            raise HTTPException(400, f"body must be N x 64 x 64 x 3 uint8 frames ({FRAME_BYTES} bytes each), got {len(body)} bytes")
+            raise HTTPException(
+                400, f"body must be N x 64 x 64 x 3 uint8 frames ({FRAME_BYTES} bytes each), got {len(body)} bytes"
+            )
         n = len(body) // FRAME_BYTES
         if n > svc["stream"]["max_frames_per_request"]:
             raise HTTPException(413, f"at most {svc['stream']['max_frames_per_request']} frames per request")
@@ -203,8 +216,11 @@ def create_app(model_dir: Path | None = None, db_path: Path | None = None, clips
             "station": station,
             "standard_work": stations[station],
             "cycles": rows,
-            "summary": {"count": len(rows), "median_s": float(np.median(times)) if times else None,
-                        "deviating": sum(1 for r in rows if r["deviations"])},
+            "summary": {
+                "count": len(rows),
+                "median_s": float(np.median(times)) if times else None,
+                "deviating": sum(1 for r in rows if r["deviations"]),
+            },
         }
 
     @app.get("/v1/stations/{station}/events")

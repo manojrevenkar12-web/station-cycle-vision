@@ -13,4 +13,14 @@ targets:
   int8_agreement: 0.98          # int8 encoder: same frame label as float
   edge_ms_per_frame: 20.0       # one core, encoder + streaming TCN
 
-floors: {}
+# first full run (2026-10-30), trained stations, live int8 on the box: cycles found 100%, cycle-time
+# error 0.15 s, deviations caught 90.9% at 90.9% precision, 0.28% person pixels leaked, int8 = float on
+# 99.8% of frames, 0.61 ms per frame
+floors:
+  cycle_recall: 0.95
+  cycle_time_mae_s: 0.5
+  deviation_recall: 0.8
+  deviation_precision: 0.8
+  leak_rate: 0.01
+  int8_agreement: 0.98
+  edge_ms_per_frame: 20.0

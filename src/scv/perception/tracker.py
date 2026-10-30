@@ -74,7 +74,9 @@ class Tracker:
         return out
 
 
-def mot_metrics(truth: np.ndarray, truth_vis: np.ndarray, hyp: list[list[tuple[int, float, float]]], match_px: float) -> dict[str, float]:
+def mot_metrics(
+    truth: np.ndarray, truth_vis: np.ndarray, hyp: list[list[tuple[int, float, float]]], match_px: float
+) -> dict[str, float]:
     """CLEAR MOT (MOTA, ID switches) and IDF1 for two ground-truth objects per frame.
 
     truth (T, G, 2), truth_vis (T, G), hyp[t] = [(id, x, y)].

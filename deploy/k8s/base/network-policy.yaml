@@ -1,0 +1,14 @@
+# Nothing reaches the edge service except from inside the namespace (the line's gateway, Prometheus
+# agent); it makes no outbound connections: video stays on the box.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: scv-edge
+spec:
+  podSelector:
+    matchLabels: { app.kubernetes.io/name: scv-edge }
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from: [{ podSelector: {} }]
+      ports: [{ port: 8080 }]
+  egress: []

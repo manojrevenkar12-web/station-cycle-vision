@@ -46,4 +46,6 @@ def test_streaming_in_chunks_equals_the_live_reference(client, edge_dir, episode
     assert strip == ref
     stored = client.get("/v1/stations/S1/events?limit=5000").json()["events"]
     assert len(stored) == len(ref)
-    assert client.get("/v1/stations/S1/cycles").json()["summary"]["count"] == sum(1 for e in ref if e["type"] == "cycle_completed")
+    assert client.get("/v1/stations/S1/cycles").json()["summary"]["count"] == sum(
+        1 for e in ref if e["type"] == "cycle_completed"
+    )

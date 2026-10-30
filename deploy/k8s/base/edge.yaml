@@ -1,0 +1,70 @@
+# One edge service per camera box (node). On a plant, nodes labelled scv.dev/camera-box=true run it;
+# events and anonymised clips stay on the node's volume.
+apiVersion: v1
+kind: Service
+metadata:
+  name: scv-edge
+spec:
+  selector: { app.kubernetes.io/name: scv-edge }
+  ports: [{ name: http, port: 80, targetPort: http }]
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: scv-edge-data
+spec:
+  accessModes: [ReadWriteOnce]
+  resources: { requests: { storage: 1Gi } }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scv-edge
+spec:
+  replicas: 1
+  strategy: { type: Recreate }   # one writer for the node-local SQLite event store
+  selector:
+    matchLabels: { app.kubernetes.io/name: scv-edge }
+  template:
+    metadata:
+      labels: { app.kubernetes.io/name: scv-edge }
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: /metrics
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        fsGroup: 10001
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: edge
+          image: scv-edge
+          ports: [{ name: http, containerPort: 8080 }]
+          startupProbe:
+            httpGet: { path: /readyz, port: http }
+            periodSeconds: 2
+            failureThreshold: 30
+          readinessProbe:
+            httpGet: { path: /readyz, port: http }
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 10
+          resources:
+            requests: { cpu: 500m, memory: 256Mi }
+            limits: { memory: 1Gi }
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ALL] }
+          volumeMounts:
+            - { name: data, mountPath: /app/data }
+            - { name: tmp, mountPath: /tmp }
+      volumes:
+        - name: data
+          persistentVolumeClaim: { claimName: scv-edge-data }
+        - name: tmp
+          emptyDir: {}

@@ -1,0 +1,1837 @@
+{
+  "profile": "full",
+  "generated_at": "2026-10-30T20:34:10Z",
+  "seconds": 877.6,
+  "steps": ["idle", "pick_base", "place_base", "pick_screw", "fasten", "inspect", "unload"],
+  "domains": ["train", "camera", "lighting", "busy", "new_station", "heldout"],
+  "sizes": {
+    "train_frames": 19200,
+    "train_recordings": 32,
+    "test_recordings": { "train": 8, "camera": 8, "lighting": 8, "busy": 8, "new_station": 3, "heldout": 4 },
+    "fps": 5
+  },
+  "model": {
+    "encoder_parameters": 213447,
+    "tcn_parameters": 273870,
+    "tcn_receptive_field_frames": 511,
+    "detector_parameters": 73837
+  },
+  "temporal": {
+    "frame-only": {
+      "train": {
+        "accuracy": 0.9377083333333334,
+        "edit": 88.18382668150204,
+        "f1_10": 93.5213216098825,
+        "f1_25": 93.34275018131108,
+        "f1_50": 93.1575649961259,
+        "cycle_recall": 0.9821428571428571,
+        "cycle_precision": 0.9821428571428571,
+        "cycle_time_mae_s": 0.14655135366014277,
+        "deviation_recall": 0.9090909090909091,
+        "deviation_precision": 1.0,
+        "deviation_type_accuracy": 1.0,
+        "cycles_true": 56,
+        "cycles_found": 56,
+        "cycles_matched": 55,
+        "deviation_true": 11,
+        "deviation_flagged": 10,
+        "deviation_tp": 10,
+        "deviation_typed_right": 10
+      },
+      "camera": {
+        "accuracy": 0.9070833333333334,
+        "edit": 77.66021599849765,
+        "f1_10": 86.75052208375354,
+        "f1_25": 86.01328773772588,
+        "f1_50": 83.82303511817642,
+        "cycle_recall": 0.9811320754716981,
+        "cycle_precision": 0.9454545454545454,
+        "cycle_time_mae_s": 0.20786237793353177,
+        "deviation_recall": 1.0,
+        "deviation_precision": 0.6842105263157895,
+        "deviation_type_accuracy": 0.7692307692307693,
+        "cycles_true": 53,
+        "cycles_found": 55,
+        "cycles_matched": 52,
+        "deviation_true": 13,
+        "deviation_flagged": 19,
+        "deviation_tp": 13,
+        "deviation_typed_right": 10
+      },
+      "lighting": {
+        "accuracy": 0.913125,
+        "edit": 77.94171171493846,
+        "f1_10": 87.28359904685294,
+        "f1_25": 86.83185564481094,
+        "f1_50": 84.68855106817942,
+        "cycle_recall": 1.0,
+        "cycle_precision": 1.0,
+        "cycle_time_mae_s": 0.40023860079504125,
+        "deviation_recall": 1.0,
+        "deviation_precision": 0.7857142857142857,
+        "deviation_type_accuracy": 0.8181818181818182,
+        "cycles_true": 55,
+        "cycles_found": 55,
+        "cycles_matched": 55,
+        "deviation_true": 11,
+        "deviation_flagged": 14,
+        "deviation_tp": 11,
+        "deviation_typed_right": 9
+      },
+      "busy": {
+        "accuracy": 0.8764583333333333,
+        "edit": 68.02502870471628,
+        "f1_10": 80.63624844009932,
+        "f1_25": 78.83842650444814,
+        "f1_50": 73.58938065317356,
+        "cycle_recall": 0.8947368421052632,
+        "cycle_precision": 0.8947368421052632,
+        "cycle_time_mae_s": 0.879461268664234,
+        "deviation_recall": 0.7142857142857143,
+        "deviation_precision": 0.2631578947368421,
+        "deviation_type_accuracy": 0.6,
+        "cycles_true": 57,
+        "cycles_found": 57,
+        "cycles_matched": 51,
+        "deviation_true": 7,
+        "deviation_flagged": 19,
+        "deviation_tp": 5,
+        "deviation_typed_right": 3
+      },
+      "new_station": {
+        "accuracy": 0.5522222222222223,
+        "edit": 41.16081871345029,
+        "f1_10": 55.637089293656594,
+        "f1_25": 43.35225971491327,
+        "f1_50": 30.176586944951385,
+        "cycle_recall": 0.0,
+        "cycle_precision": 0.0,
+        "cycle_time_mae_s": 0.0,
+        "deviation_recall": 0.0,
+        "deviation_precision": 0.0,
+        "deviation_type_accuracy": 0.0,
+        "cycles_true": 16,
+        "cycles_found": 8,
+        "cycles_matched": 0,
+        "deviation_true": 0,
+        "deviation_flagged": 0,
+        "deviation_tp": 0,
+        "deviation_typed_right": 0
+      },
+      "heldout": {
+        "accuracy": 0.6829166666666666,
+        "edit": 44.633475291616776,
+        "f1_10": 56.86411963374782,
+        "f1_25": 49.40607183417372,
+        "f1_50": 39.96128508584405,
+        "cycle_recall": 0.22727272727272727,
+        "cycle_precision": 0.625,
+        "cycle_time_mae_s": 3.7159277115922777,
+        "deviation_recall": 0.0,
+        "deviation_precision": 0.0,
+        "deviation_type_accuracy": 0.0,
+        "cycles_true": 22,
+        "cycles_found": 8,
+        "cycles_matched": 5,
+        "deviation_true": 0,
+        "deviation_flagged": 4,
+        "deviation_tp": 0,
+        "deviation_typed_right": 0
+      }
+    },
+    "causal-tcn (no augmentation)": {
+      "train": {
+        "accuracy": 0.933125,
+        "edit": 89.00050935328802,
+        "f1_10": 94.1346880231097,
+        "f1_25": 93.94950283792453,
+        "f1_50": 92.96984213674943,
+        "cycle_recall": 0.9821428571428571,
+        "cycle_precision": 0.9821428571428571,
+        "cycle_time_mae_s": 0.20079009946527268,
+        "deviation_recall": 0.9090909090909091,
+        "deviation_precision": 1.0,
+        "deviation_type_accuracy": 1.0,
+        "cycles_true": 56,
+        "cycles_found": 56,
+        "cycles_matched": 55,
+        "deviation_true": 11,
+        "deviation_flagged": 10,
+        "deviation_tp": 10,
+        "deviation_typed_right": 10
+      },
+      "camera": {
+        "accuracy": 0.6852083333333334,
+        "edit": 53.8803620482813,
+        "f1_10": 65.4922680919748,
+        "f1_25": 58.12759728526187,
+        "f1_50": 46.69387198144106,
+        "cycle_recall": 0.7547169811320755,
+        "cycle_precision": 1.0,
+        "cycle_time_mae_s": 0.7486522543373864,
+        "deviation_recall": 1.0,
+        "deviation_precision": 0.25,
+        "deviation_type_accuracy": 0.7142857142857143,
+        "cycles_true": 53,
+        "cycles_found": 40,
+        "cycles_matched": 40,
+        "deviation_true": 7,
+        "deviation_flagged": 28,
+        "deviation_tp": 7,
+        "deviation_typed_right": 5
+      },
+      "lighting": {
+        "accuracy": 0.8416666666666666,
+        "edit": 72.06918128813274,
+        "f1_10": 81.56312988755472,
+        "f1_25": 79.65065690789379,
+        "f1_50": 73.18561816062527,
+        "cycle_recall": 0.8727272727272727,
+        "cycle_precision": 0.9795918367346939,
+        "cycle_time_mae_s": 0.9101681894576036,
+        "deviation_recall": 1.0,
+        "deviation_precision": 0.5,
+        "deviation_type_accuracy": 0.6666666666666666,
+        "cycles_true": 55,
+        "cycles_found": 49,
+        "cycles_matched": 48,
+        "deviation_true": 9,
+        "deviation_flagged": 18,
+        "deviation_tp": 9,
+        "deviation_typed_right": 6
+      },
+      "busy": {
+        "accuracy": 0.9131250000000001,
+        "edit": 80.86655994202354,
+        "f1_10": 89.18701646185991,
+        "f1_25": 89.05815048247847,
+        "f1_50": 85.24398490573353,
+        "cycle_recall": 1.0,
+        "cycle_precision": 1.0,
+        "cycle_time_mae_s": 0.3129254123035127,
+        "deviation_recall": 1.0,
+        "deviation_precision": 0.5714285714285714,
+        "deviation_type_accuracy": 0.5,
+        "cycles_true": 57,
+        "cycles_found": 57,
+        "cycles_matched": 57,
+        "deviation_true": 8,
+        "deviation_flagged": 14,
+        "deviation_tp": 8,
+        "deviation_typed_right": 4
+      },
+      "new_station": {
+        "accuracy": 0.5511111111111111,
+        "edit": 46.18321086580662,
+        "f1_10": 49.450317124735726,
+        "f1_25": 35.960895446298714,
+        "f1_50": 20.15263970731561,
+        "cycle_recall": 0.0,
+        "cycle_precision": 0.0,
+        "cycle_time_mae_s": 0.0,
+        "deviation_recall": 0.0,
+        "deviation_precision": 0.0,
+        "deviation_type_accuracy": 0.0,
+        "cycles_true": 16,
+        "cycles_found": 8,
+        "cycles_matched": 0,
+        "deviation_true": 0,
+        "deviation_flagged": 0,
+        "deviation_tp": 0,
+        "deviation_typed_right": 0
+      },
+      "heldout": {
+        "accuracy": 0.4308333333333334,
+        "edit": 32.889383831412815,
+        "f1_10": 37.056901806157015,
+        "f1_25": 29.117686195640516,
+        "f1_50": 15.871745273433458,
+        "cycle_recall": 0.0,
+        "cycle_precision": 0.0,
+        "cycle_time_mae_s": 0.0,
+        "deviation_recall": 0.0,
+        "deviation_precision": 0.0,
+        "deviation_type_accuracy": 0.0,
+        "cycles_true": 22,
+        "cycles_found": 0,
+        "cycles_matched": 0,
+        "deviation_true": 0,
+        "deviation_flagged": 0,
+        "deviation_tp": 0,
+        "deviation_typed_right": 0
+      }
+    },
+    "causal-tcn": {
+      "train": {
+        "accuracy": 0.9439583333333332,
+        "edit": 95.46915280022122,
+        "f1_10": 97.63822030668436,
+        "f1_25": 97.63822030668436,
+        "f1_50": 97.46815227947346,
+        "cycle_recall": 1.0,
+        "cycle_precision": 1.0,
+        "cycle_time_mae_s": 0.22593124245353305,
+        "deviation_recall": 0.9090909090909091,
+        "deviation_precision": 0.8333333333333334,
+        "deviation_type_accuracy": 1.0,
+        "cycles_true": 56,
+        "cycles_found": 56,
+        "cycles_matched": 56,
+        "deviation_true": 11,
+        "deviation_flagged": 12,
+        "deviation_tp": 10,
+        "deviation_typed_right": 10
+      },
+      "camera": {
+        "accuracy": 0.935,
+        "edit": 93.44496117717992,
+        "f1_10": 96.56780688882898,
+        "f1_25": 96.56780688882898,
+        "f1_50": 95.62375926978137,
+        "cycle_recall": 1.0,
+        "cycle_precision": 1.0,
+        "cycle_time_mae_s": 0.10740489917924587,
+        "deviation_recall": 0.9230769230769231,
+        "deviation_precision": 1.0,
+        "deviation_type_accuracy": 1.0,
+        "cycles_true": 53,
+        "cycles_found": 53,
+        "cycles_matched": 53,
+        "deviation_true": 13,
+        "deviation_flagged": 12,
+        "deviation_tp": 12,
+        "deviation_typed_right": 12
+      },
+      "lighting": {
+        "accuracy": 0.93125,
+        "edit": 89.58289860956552,
+        "f1_10": 94.34489422384975,
+        "f1_25": 94.18864422384975,
+        "f1_50": 93.30564041352173,
+        "cycle_recall": 1.0,
+        "cycle_precision": 1.0,
+        "cycle_time_mae_s": 0.3418712448219192,
+        "deviation_recall": 1.0,
+        "deviation_precision": 0.6111111111111112,
+        "deviation_type_accuracy": 0.8181818181818182,
+        "cycles_true": 55,
+        "cycles_found": 55,
+        "cycles_matched": 55,
+        "deviation_true": 11,
+        "deviation_flagged": 18,
+        "deviation_tp": 11,
+        "deviation_typed_right": 9
+      },
+      "busy": {
+        "accuracy": 0.9141666666666667,
+        "edit": 83.97080506312098,
+        "f1_10": 91.16671946559879,
+        "f1_25": 90.99189429077362,
+        "f1_50": 88.65651198764724,
+        "cycle_recall": 0.9649122807017544,
+        "cycle_precision": 0.9649122807017544,
+        "cycle_time_mae_s": 0.4286044675152887,
+        "deviation_recall": 0.875,
+        "deviation_precision": 0.4117647058823529,
+        "deviation_type_accuracy": 0.5714285714285714,
+        "cycles_true": 57,
+        "cycles_found": 57,
+        "cycles_matched": 55,
+        "deviation_true": 8,
+        "deviation_flagged": 17,
+        "deviation_tp": 7,
+        "deviation_typed_right": 4
+      },
+      "new_station": {
+        "accuracy": 0.6455555555555555,
+        "edit": 38.077259883516895,
+        "f1_10": 52.906780414111786,
+        "f1_25": 45.72329918370974,
+        "f1_50": 33.54762539513272,
+        "cycle_recall": 0.0,
+        "cycle_precision": 0.0,
+        "cycle_time_mae_s": 0.0,
+        "deviation_recall": 0.0,
+        "deviation_precision": 0.0,
+        "deviation_type_accuracy": 0.0,
+        "cycles_true": 16,
+        "cycles_found": 14,
+        "cycles_matched": 0,
+        "deviation_true": 0,
+        "deviation_flagged": 0,
+        "deviation_tp": 0,
+        "deviation_typed_right": 0
+      },
+      "heldout": {
+        "accuracy": 0.7558333333333334,
+        "edit": 60.386602462426445,
+        "f1_10": 69.84431293390833,
+        "f1_25": 64.1108511484234,
+        "f1_50": 53.916429641863175,
+        "cycle_recall": 0.5454545454545454,
+        "cycle_precision": 0.8,
+        "cycle_time_mae_s": 1.7160609963872984,
+        "deviation_recall": 0.0,
+        "deviation_precision": 0.0,
+        "deviation_type_accuracy": 0.0,
+        "cycles_true": 22,
+        "cycles_found": 15,
+        "cycles_matched": 12,
+        "deviation_true": 0,
+        "deviation_flagged": 8,
+        "deviation_tp": 0,
+        "deviation_typed_right": 0
+      }
+    },
+    "offline-transformer": {
+      "train": {
+        "accuracy": 0.9485416666666667,
+        "edit": 91.00263554216868,
+        "f1_10": 95.07011382919049,
+        "f1_25": 95.07011382919049,
+        "f1_50": 94.71289807087248,
+        "cycle_recall": 1.0,
+        "cycle_precision": 1.0,
+        "cycle_time_mae_s": 0.11710504890597144,
+        "deviation_recall": 0.9090909090909091,
+        "deviation_precision": 1.0,
+        "deviation_type_accuracy": 1.0,
+        "cycles_true": 56,
+        "cycles_found": 56,
+        "cycles_matched": 56,
+        "deviation_true": 11,
+        "deviation_flagged": 10,
+        "deviation_tp": 10,
+        "deviation_typed_right": 10
+      },
+      "camera": {
+        "accuracy": 0.9299999999999999,
+        "edit": 88.86945928629977,
+        "f1_10": 93.79970581053888,
+        "f1_25": 93.79970581053888,
+        "f1_50": 92.97639893302025,
+        "cycle_recall": 1.0,
+        "cycle_precision": 1.0,
+        "cycle_time_mae_s": 0.12843048201260746,
+        "deviation_recall": 1.0,
+        "deviation_precision": 0.9285714285714286,
+        "deviation_type_accuracy": 0.9230769230769231,
+        "cycles_true": 53,
+        "cycles_found": 53,
+        "cycles_matched": 53,
+        "deviation_true": 13,
+        "deviation_flagged": 14,
+        "deviation_tp": 13,
+        "deviation_typed_right": 12
+      },
+      "lighting": {
+        "accuracy": 0.941875,
+        "edit": 85.6205714824136,
+        "f1_10": 92.05060092551805,
+        "f1_25": 92.05060092551805,
+        "f1_50": 91.69217338183871,
+        "cycle_recall": 1.0,
+        "cycle_precision": 1.0,
+        "cycle_time_mae_s": 0.12950995474403307,
+        "deviation_recall": 1.0,
+        "deviation_precision": 0.8461538461538461,
+        "deviation_type_accuracy": 0.9090909090909091,
+        "cycles_true": 55,
+        "cycles_found": 55,
+        "cycles_matched": 55,
+        "deviation_true": 11,
+        "deviation_flagged": 13,
+        "deviation_tp": 11,
+        "deviation_typed_right": 10
+      },
+      "busy": {
+        "accuracy": 0.8977083333333333,
+        "edit": 73.25004647810914,
+        "f1_10": 84.07211647488907,
+        "f1_25": 82.92045493050593,
+        "f1_50": 77.89866036223873,
+        "cycle_recall": 0.9298245614035088,
+        "cycle_precision": 0.9464285714285714,
+        "cycle_time_mae_s": 0.7966478943712932,
+        "deviation_recall": 1.0,
+        "deviation_precision": 0.34782608695652173,
+        "deviation_type_accuracy": 0.375,
+        "cycles_true": 57,
+        "cycles_found": 56,
+        "cycles_matched": 53,
+        "deviation_true": 8,
+        "deviation_flagged": 23,
+        "deviation_tp": 8,
+        "deviation_typed_right": 3
+      },
+      "new_station": {
+        "accuracy": 0.5722222222222223,
+        "edit": 39.23222371498235,
+        "f1_10": 50.810331560105716,
+        "f1_25": 38.67861086018267,
+        "f1_50": 27.507109638997623,
+        "cycle_recall": 0.0,
+        "cycle_precision": 0.0,
+        "cycle_time_mae_s": 0.0,
+        "deviation_recall": 0.0,
+        "deviation_precision": 0.0,
+        "deviation_type_accuracy": 0.0,
+        "cycles_true": 16,
+        "cycles_found": 17,
+        "cycles_matched": 0,
+        "deviation_true": 0,
+        "deviation_flagged": 0,
+        "deviation_tp": 0,
+        "deviation_typed_right": 0
+      },
+      "heldout": {
+        "accuracy": 0.6945833333333332,
+        "edit": 53.2609371797533,
+        "f1_10": 62.100563786351,
+        "f1_25": 54.69276566071848,
+        "f1_50": 42.89759957436494,
+        "cycle_recall": 0.3181818181818182,
+        "cycle_precision": 0.7777777777777778,
+        "cycle_time_mae_s": 2.846443869893311,
+        "deviation_recall": 1.0,
+        "deviation_precision": 0.2,
+        "deviation_type_accuracy": 0.0,
+        "cycles_true": 22,
+        "cycles_found": 9,
+        "cycles_matched": 7,
+        "deviation_true": 1,
+        "deviation_flagged": 5,
+        "deviation_tp": 1,
+        "deviation_typed_right": 0
+      }
+    }
+  },
+  "onboarding": {
+    "zero_shot": {
+      "accuracy": 0.6455555555555555,
+      "edit": 38.077259883516895,
+      "f1_10": 52.906780414111786,
+      "f1_25": 45.72329918370974,
+      "f1_50": 33.54762539513272,
+      "cycle_recall": 0.0,
+      "cycle_precision": 0.0,
+      "cycle_time_mae_s": 0.0,
+      "deviation_recall": 0.0,
+      "deviation_precision": 0.0,
+      "deviation_type_accuracy": 0.0,
+      "cycles_true": 16,
+      "cycles_found": 14,
+      "cycles_matched": 0,
+      "deviation_true": 0,
+      "deviation_flagged": 0,
+      "deviation_tp": 0,
+      "deviation_typed_right": 0
+    },
+    "one_recording": {
+      "accuracy": 0.8711111111111111,
+      "edit": 74.14522120905099,
+      "f1_10": 83.91475809247068,
+      "f1_25": 80.4032593786747,
+      "f1_50": 72.2281307997353,
+      "cycle_recall": 0.8125,
+      "cycle_precision": 0.9285714285714286,
+      "cycle_time_mae_s": 4.772558114237533,
+      "deviation_recall": 1.0,
+      "deviation_precision": 0.1111111111111111,
+      "deviation_type_accuracy": 1.0,
+      "cycles_true": 16,
+      "cycles_found": 14,
+      "cycles_matched": 13,
+      "deviation_true": 1,
+      "deviation_flagged": 9,
+      "deviation_tp": 1,
+      "deviation_typed_right": 1
+    }
+  },
+  "perception": {
+    "train": {
+      "hand_recall": 0.30520833333333336,
+      "hand_precision": 0.8838612368024132,
+      "mota": 0.21364583333333334,
+      "idf1": 0.04219471352626397,
+      "id_switches_per_min": 32.625,
+      "leak_rate": 0.0012770780372550331,
+      "over_redaction": 0.04421453181300802,
+      "frames_leaking_over_5px": 0.020625
+    },
+    "camera": {
+      "hand_recall": 0.3634375,
+      "hand_precision": 0.8985320628380118,
+      "mota": 0.27,
+      "idf1": 0.060124203237546275,
+      "id_switches_per_min": 32.75,
+      "leak_rate": 0.0052516223568008225,
+      "over_redaction": 0.0607234590188563,
+      "frames_leaking_over_5px": 0.07479166666666667
+    },
+    "lighting": {
+      "hand_recall": 0.5015625,
+      "hand_precision": 0.9225905345851696,
+      "mota": 0.39583333333333337,
+      "idf1": 0.07060053200892347,
+      "id_switches_per_min": 39.1875,
+      "leak_rate": 0.01221028220561219,
+      "over_redaction": 0.12278805270230463,
+      "frames_leaking_over_5px": 0.15145833333333333
+    },
+    "busy": {
+      "hand_recall": 0.32869547023747253,
+      "hand_precision": 0.8007135575942915,
+      "mota": 0.1961916898190572,
+      "idf1": 0.049903535597597054,
+      "id_switches_per_min": 34.375,
+      "leak_rate": 0.035815518256357405,
+      "over_redaction": 0.04291259277437473,
+      "frames_leaking_over_5px": 0.17979166666666668
+    },
+    "new_station": {
+      "hand_recall": 0.25083333333333335,
+      "hand_precision": 0.7685106382978724,
+      "mota": 0.11888888888888889,
+      "idf1": 0.034933240929038954,
+      "id_switches_per_min": 36.333333333333336,
+      "leak_rate": 0.018116342058838383,
+      "over_redaction": 0.043883220030845556,
+      "frames_leaking_over_5px": 0.07944444444444444
+    },
+    "heldout": {
+      "hand_recall": 0.20464532328939108,
+      "hand_precision": 0.9340974212034384,
+      "mota": 0.15022628760495726,
+      "idf1": 0.050954704479897014,
+      "id_switches_per_min": 19.125,
+      "leak_rate": 0.014590579720117049,
+      "over_redaction": 0.07253462044856462,
+      "frames_leaking_over_5px": 0.11041666666666666
+    }
+  },
+  "timelines": {
+    "train": {
+      "station": "S1",
+      "fps": 5,
+      "truth": [
+        0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3,
+        3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6,
+        6, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5,
+        5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3,
+        3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5
+      ],
+      "live": [
+        0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3,
+        3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6,
+        6, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5,
+        5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3,
+        3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5
+      ],
+      "offline": [
+        0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3,
+        3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6,
+        6, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5,
+        5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3,
+        3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5
+      ],
+      "cycles": [
+        {
+          "start": 0.937071484698317,
+          "end": 16.461469218666146,
+          "deviations": ["extra"],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "inspect",
+            "unload"
+          ]
+        },
+        {
+          "start": 18.051342380122346,
+          "end": 26.923921240847484,
+          "deviations": ["missing"],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 29.82367870211689,
+          "end": 42.31346111761455,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 43.750966762012105,
+          "end": 56.124493535124415,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 58.496252020607315,
+          "end": 70.30375873954021,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 72.49708198935679,
+          "end": 84.93492991756362,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 87.2194975392049,
+          "end": 99.59226130773244,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 101.1087640736634,
+          "end": 114.13560849066043,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        }
+      ],
+      "standard_work": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"],
+      "found": [
+        {
+          "start": 1.0,
+          "end": 16.6,
+          "deviations": ["extra"],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "inspect",
+            "unload"
+          ]
+        },
+        {
+          "start": 18.2,
+          "end": 27.2,
+          "deviations": ["missing"],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 30.0,
+          "end": 42.4,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 43.8,
+          "end": 56.4,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 58.6,
+          "end": 70.4,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 72.6,
+          "end": 85.2,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 87.4,
+          "end": 99.8,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 101.2,
+          "end": 114.4,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        }
+      ]
+    },
+    "camera": {
+      "station": "S1",
+      "fps": 5,
+      "truth": [
+        0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3,
+        3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6,
+        0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
+        2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4
+      ],
+      "live": [
+        0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6,
+        6, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1,
+        1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4
+      ],
+      "offline": [
+        0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6,
+        6, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1,
+        1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4
+      ],
+      "cycles": [
+        {
+          "start": 0.029805284231345874,
+          "end": 16.397329798461154,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 16.85083660543693,
+          "end": 30.61329083046525,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 31.167838895846867,
+          "end": 46.194138122948566,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 46.76038503785867,
+          "end": 61.20980111967714,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 61.654798180275186,
+          "end": 79.75037040094509,
+          "deviations": ["extra"],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "inspect",
+            "unload"
+          ]
+        },
+        {
+          "start": 81.59825045858224,
+          "end": 101.65046843768316,
+          "deviations": ["extra"],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "inspect",
+            "unload"
+          ]
+        },
+        {
+          "start": 103.73846304772701,
+          "end": 119.88932737848687,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        }
+      ],
+      "standard_work": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"],
+      "found": [
+        {
+          "start": 0.0,
+          "end": 16.6,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 17.0,
+          "end": 30.8,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 31.4,
+          "end": 46.4,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 47.0,
+          "end": 61.4,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 61.8,
+          "end": 79.8,
+          "deviations": ["extra"],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "inspect",
+            "unload"
+          ]
+        },
+        {
+          "start": 81.8,
+          "end": 101.8,
+          "deviations": ["extra"],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "inspect",
+            "unload"
+          ]
+        },
+        {
+          "start": 104.0,
+          "end": 120.0,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        }
+      ]
+    },
+    "lighting": {
+      "station": "S1",
+      "fps": 5,
+      "truth": [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 1, 1, 1,
+        1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 1, 1, 1
+      ],
+      "live": [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 1, 1,
+        1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 1, 1
+      ],
+      "offline": [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 1, 1,
+        1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 1, 1
+      ],
+      "cycles": [
+        {
+          "start": 1.9485161980983587,
+          "end": 15.01592702469248,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 15.704153364789804,
+          "end": 24.3717266937057,
+          "deviations": ["missing"],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 26.45291069484463,
+          "end": 38.09296380828354,
+          "deviations": ["missing"],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 39.39421144662083,
+          "end": 50.967806053865736,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 52.58956346455701,
+          "end": 66.12821714649623,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 68.46789179008277,
+          "end": 80.65272622615169,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 82.8829398166521,
+          "end": 96.47928603269666,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 98.92086177141955,
+          "end": 111.91879462678544,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        }
+      ],
+      "standard_work": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"],
+      "found": [
+        {
+          "start": 2.2,
+          "end": 15.2,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 16.0,
+          "end": 24.4,
+          "deviations": ["missing"],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 26.6,
+          "end": 38.2,
+          "deviations": ["missing"],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 39.6,
+          "end": 51.2,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 52.8,
+          "end": 66.4,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 68.6,
+          "end": 80.8,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 83.2,
+          "end": 96.6,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 99.2,
+          "end": 112.0,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        }
+      ]
+    },
+    "busy": {
+      "station": "S1",
+      "fps": 5,
+      "truth": [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6,
+        6, 6, 6, 6, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+        2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4
+      ],
+      "live": [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3,
+        4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6,
+        6, 6, 6, 6, 6, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2,
+        2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4
+      ],
+      "offline": [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3,
+        3, 6, 6, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6,
+        6, 6, 6, 6, 6, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 2, 2, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2,
+        2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4
+      ],
+      "cycles": [
+        {
+          "start": 1.7387397427939315,
+          "end": 17.17406712820714,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 17.70265715464243,
+          "end": 29.676111469359043,
+          "deviations": ["missing"],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 30.888265546986286,
+          "end": 45.54544872883383,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 46.833873283879086,
+          "end": 63.628566295190346,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 64.41340047905959,
+          "end": 80.76359108941462,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 81.31400901460516,
+          "end": 95.94076836174065,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 98.93795550376453,
+          "end": 113.87886350513085,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        }
+      ],
+      "standard_work": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"],
+      "found": [
+        {
+          "start": 2.2,
+          "end": 17.4,
+          "deviations": ["extra"],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "inspect",
+            "unload"
+          ]
+        },
+        {
+          "start": 18.0,
+          "end": 29.8,
+          "deviations": ["missing"],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 31.0,
+          "end": 45.6,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 47.0,
+          "end": 59.6,
+          "deviations": ["missing"],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "unload"]
+        },
+        {
+          "start": 64.6,
+          "end": 80.8,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 81.6,
+          "end": 96.2,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        },
+        {
+          "start": 99.2,
+          "end": 114.0,
+          "deviations": [],
+          "steps": ["pick_base", "place_base", "pick_screw", "fasten", "pick_screw", "fasten", "inspect", "unload"]
+        }
+      ]
+    },
+    "new_station": {
+      "station": "S5",
+      "fps": 5,
+      "truth": [
+        0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3,
+        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5,
+        5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2,
+        2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 4, 4,
+        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4
+      ],
+      "live": [
+        0, 0, 1, 0, 0, 6, 6, 6, 6, 6, 2, 2, 2, 2, 2, 2, 3, 3, 4, 3, 3, 3, 0, 3, 4, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3,
+        4, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 3, 6, 6, 0, 4, 4, 4, 0, 0, 0, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5,
+        5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 3, 6, 6, 6, 1, 1, 1, 1, 1, 2, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 6, 6, 6, 6, 6, 6, 6,
+        2, 2, 2, 2, 2, 2, 3, 3, 4, 3, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 4, 4, 3, 3,
+        3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 6, 6, 4, 4, 4, 4, 3, 6, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4
+      ],
+      "offline": [
+        0, 1, 1, 6, 6, 6, 6, 6, 6, 6, 2, 5, 2, 2, 2, 2, 2, 3, 1, 4, 4, 4, 0, 4, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 4,
+        4, 0, 0, 4, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 4, 0, 4, 4, 0, 4, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 5,
+        5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 3, 3, 1, 1, 1, 1, 1, 1, 1, 2, 1, 0, 0, 0, 0, 0, 1, 1, 6, 6, 6, 6, 6, 6, 6, 6, 2,
+        2, 5, 2, 2, 2, 2, 2, 3, 0, 0, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0,
+        4, 4, 6, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 4, 4, 4, 4, 0, 4, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4
+      ],
+      "cycles": [
+        {
+          "start": 0.07256566525239627,
+          "end": 20.94428858004628,
+          "deviations": [],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "inspect",
+            "unload"
+          ]
+        },
+        {
+          "start": 22.14229972931273,
+          "end": 45.14000357298659,
+          "deviations": [],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "inspect",
+            "unload"
+          ]
+        },
+        {
+          "start": 46.737163558073476,
+          "end": 68.14983578257389,
+          "deviations": [],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "inspect",
+            "unload"
+          ]
+        },
+        {
+          "start": 68.62175678899305,
+          "end": 90.8459170563546,
+          "deviations": [],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "inspect",
+            "unload"
+          ]
+        },
+        {
+          "start": 92.65350189004138,
+          "end": 113.13081694051114,
+          "deviations": [],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "inspect",
+            "unload"
+          ]
+        }
+      ],
+      "standard_work": [
+        "pick_base",
+        "place_base",
+        "pick_screw",
+        "fasten",
+        "pick_screw",
+        "fasten",
+        "pick_screw",
+        "fasten",
+        "inspect",
+        "unload"
+      ],
+      "found": [
+        { "start": 22.4, "end": 24.6, "deviations": ["missing"], "steps": ["pick_base", "unload"] },
+        { "start": 47.0, "end": 48.8, "deviations": ["missing"], "steps": ["pick_base", "unload"] },
+        { "start": 69.0, "end": 71.8, "deviations": ["missing"], "steps": ["pick_base", "unload"] },
+        { "start": 93.0, "end": 95.4, "deviations": ["missing"], "steps": ["pick_base", "unload"] },
+        { "start": 115.2, "end": 117.6, "deviations": ["missing"], "steps": ["pick_base", "unload"] }
+      ]
+    },
+    "heldout": {
+      "station": "HELDOUT",
+      "fps": 5,
+      "truth": [
+        0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 3, 3,
+        3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4,
+        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2,
+        2, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0
+      ],
+      "live": [
+        0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 3, 3,
+        3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 6, 6, 6, 6, 6, 3, 4, 3, 3, 3, 4, 4, 4, 3, 3, 4, 4, 4,
+        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 6, 3, 4, 6, 6, 0, 6, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2,
+        2, 2, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 3, 3, 3, 6, 6, 0, 6, 6, 0, 0
+      ],
+      "offline": [
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 3, 5,
+        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 4, 4, 4, 4, 4, 4, 6, 6, 4, 6, 3, 4, 3, 3, 4, 4, 4, 3, 3, 3, 4, 4, 4,
+        4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 3, 5, 1, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2,
+        2, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 4, 4, 4, 4, 4, 3,
+        4, 4, 4, 4, 4, 4, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 3, 5, 1, 1, 1, 1, 1, 2, 0, 0
+      ],
+      "cycles": [
+        {
+          "start": 1.157006577946938,
+          "end": 20.623593280328276,
+          "deviations": [],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "inspect",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "unload"
+          ]
+        },
+        {
+          "start": 21.55901108747259,
+          "end": 39.2298596037194,
+          "deviations": [],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "inspect",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "unload"
+          ]
+        },
+        {
+          "start": 40.03286909339621,
+          "end": 59.28699151031796,
+          "deviations": ["order"],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "inspect",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "pick_screw",
+            "fasten",
+            "fasten",
+            "unload"
+          ]
+        },
+        {
+          "start": 60.06851097297505,
+          "end": 77.26069461530511,
+          "deviations": [],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "inspect",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "unload"
+          ]
+        },
+        {
+          "start": 77.82007614442469,
+          "end": 97.85545551285428,
+          "deviations": [],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "inspect",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "unload"
+          ]
+        },
+        {
+          "start": 99.04327252918988,
+          "end": 116.44525343157419,
+          "deviations": [],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "inspect",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "unload"
+          ]
+        }
+      ],
+      "standard_work": [
+        "pick_base",
+        "place_base",
+        "inspect",
+        "pick_screw",
+        "fasten",
+        "pick_screw",
+        "fasten",
+        "pick_screw",
+        "fasten",
+        "unload"
+      ],
+      "found": [
+        {
+          "start": 1.6,
+          "end": 14.2,
+          "deviations": ["missing"],
+          "steps": ["pick_base", "place_base", "inspect", "pick_screw", "fasten", "pick_screw", "fasten", "unload"]
+        },
+        {
+          "start": 22.2,
+          "end": 39.6,
+          "deviations": ["extra"],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "inspect",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "unload"
+          ]
+        },
+        {
+          "start": 40.6,
+          "end": 48.2,
+          "deviations": ["missing"],
+          "steps": ["pick_base", "place_base", "inspect", "pick_screw", "fasten", "unload"]
+        },
+        {
+          "start": 60.6,
+          "end": 76.2,
+          "deviations": ["extra"],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "inspect",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "unload"
+          ]
+        },
+        {
+          "start": 78.6,
+          "end": 96.4,
+          "deviations": [],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "inspect",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "unload"
+          ]
+        },
+        {
+          "start": 99.8,
+          "end": 117.2,
+          "deviations": ["extra"],
+          "steps": [
+            "pick_base",
+            "place_base",
+            "inspect",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "pick_screw",
+            "fasten",
+            "unload"
+          ]
+        }
+      ]
+    }
+  },
+  "mlflow": {
+    "backend": "mlflow",
+    "runs": [
+      "detector",
+      "encoder-augmented",
+      "encoder-plain",
+      "temporal-causal-tcn",
+      "temporal-causal-tcn (no augmentation)",
+      "temporal-frame-only",
+      "temporal-offline-transformer"
+    ],
+    "run_ids": {
+      "encoder-plain": "7ade7e9ff3b645a0900de26bd326ebd7",
+      "encoder-augmented": "2260e0cfb433423ab1e627e9d3730565",
+      "temporal-frame-only": "dcee164bb60e4fa087a51a9d74768942",
+      "temporal-causal-tcn (no augmentation)": "88a93e1622c44d319d102f10d938fc08",
+      "temporal-causal-tcn": "c72e81fd7848455fbe91630a37d9de32",
+      "temporal-offline-transformer": "aba55f1d017f49608a3ca97ceb9e381e",
+      "detector": "a1307d75b7824c2baf0f4b35cd20e9e8"
+    }
+  },
+  "edge": {
+    "manifest": {
+      "classes": 7,
+      "state": [
+        [64, 2],
+        [64, 4],
+        [64, 8],
+        [64, 16],
+        [64, 32],
+        [64, 64],
+        [64, 128],
+        [64, 256],
+        [64, 2],
+        [64, 4],
+        [64, 8],
+        [64, 16],
+        [64, 32],
+        [64, 64],
+        [64, 128],
+        [64, 256]
+      ],
+      "stack": 3,
+      "size": 64,
+      "files": { "detector.onnx": 298532, "encoder.int8.onnx": 225799, "encoder.onnx": 851129, "tcn_step.onnx": 1140466 }
+    },
+    "latency": {
+      "float": { "median_ms": 0.6898999999975786, "p99_ms": 1.1666029399384568, "frames_per_s_per_core": 1449.4854326764892 },
+      "int8": { "median_ms": 0.5972369999653893, "p99_ms": 0.9216564499820377, "frames_per_s_per_core": 1674.377173647901 }
+    },
+    "cameras_per_core_at_fps": 334,
+    "fps": 5,
+    "debounce_frames": 2,
+    "live": {
+      "train": {
+        "int8_float_agreement": 0.9958333333333333,
+        "accuracy": 0.9429166666666666,
+        "edit": 94.40308756829748,
+        "f1_10": 97.06625168020445,
+        "f1_25": 97.06625168020445,
+        "f1_50": 96.89733276128553,
+        "cycle_recall": 1.0,
+        "cycle_precision": 1.0,
+        "cycle_time_mae_s": 0.11295968258926847,
+        "deviation_recall": 0.9090909090909091,
+        "deviation_precision": 0.9090909090909091,
+        "deviation_type_accuracy": 1.0,
+        "cycles_true": 56,
+        "cycles_found": 56,
+        "cycles_matched": 56,
+        "deviation_true": 11,
+        "deviation_flagged": 11,
+        "deviation_tp": 10,
+        "deviation_typed_right": 10
+      },
+      "camera": {
+        "int8_float_agreement": 0.9966666666666667,
+        "accuracy": 0.9341666666666666,
+        "edit": 93.63665869172249,
+        "f1_10": 96.66934750507549,
+        "f1_25": 96.66934750507549,
+        "f1_50": 95.72354918574776,
+        "cycle_recall": 1.0,
+        "cycle_precision": 1.0,
+        "cycle_time_mae_s": 0.11117848408490623,
+        "deviation_recall": 0.9230769230769231,
+        "deviation_precision": 1.0,
+        "deviation_type_accuracy": 1.0,
+        "cycles_true": 53,
+        "cycles_found": 53,
+        "cycles_matched": 53,
+        "deviation_true": 13,
+        "deviation_flagged": 12,
+        "deviation_tp": 12,
+        "deviation_typed_right": 12
+      },
+      "lighting": {
+        "int8_float_agreement": 0.9958333333333333,
+        "accuracy": 0.9297916666666667,
+        "edit": 89.39116570583533,
+        "f1_10": 94.2397703703711,
+        "f1_25": 94.08154252226984,
+        "f1_50": 93.0436114505629,
+        "cycle_recall": 1.0,
+        "cycle_precision": 1.0,
+        "cycle_time_mae_s": 0.333764299094547,
+        "deviation_recall": 0.9090909090909091,
+        "deviation_precision": 0.5882352941176471,
+        "deviation_type_accuracy": 0.9,
+        "cycles_true": 55,
+        "cycles_found": 55,
+        "cycles_matched": 55,
+        "deviation_true": 11,
+        "deviation_flagged": 17,
+        "deviation_tp": 10,
+        "deviation_typed_right": 9
+      },
+      "busy": {
+        "int8_float_agreement": 0.9964583333333333,
+        "accuracy": 0.9147916666666667,
+        "edit": 84.38162166092465,
+        "f1_10": 91.38232905132269,
+        "f1_25": 91.22607905132269,
+        "f1_50": 88.86819778093296,
+        "cycle_recall": 0.9649122807017544,
+        "cycle_precision": 0.9649122807017544,
+        "cycle_time_mae_s": 0.41505954084463426,
+        "deviation_recall": 0.875,
+        "deviation_precision": 0.4117647058823529,
+        "deviation_type_accuracy": 0.5714285714285714,
+        "cycles_true": 57,
+        "cycles_found": 57,
+        "cycles_matched": 55,
+        "deviation_true": 8,
+        "deviation_flagged": 17,
+        "deviation_tp": 7,
+        "deviation_typed_right": 4
+      },
+      "new_station": {
+        "int8_float_agreement": 0.9844444444444445,
+        "accuracy": 0.6405555555555555,
+        "edit": 38.47468277325742,
+        "f1_10": 53.3002351048381,
+        "f1_25": 44.60073638836829,
+        "f1_50": 33.21632094422022,
+        "cycle_recall": 0.0,
+        "cycle_precision": 0.0,
+        "cycle_time_mae_s": null,
+        "deviation_recall": 0.0,
+        "deviation_precision": 0.0,
+        "deviation_type_accuracy": 0.0,
+        "cycles_true": 16,
+        "cycles_found": 14,
+        "cycles_matched": 0,
+        "deviation_true": 0,
+        "deviation_flagged": 0,
+        "deviation_tp": 0,
+        "deviation_typed_right": 0
+      },
+      "heldout": {
+        "int8_float_agreement": 0.9875,
+        "accuracy": 0.7566666666666666,
+        "edit": 61.570403625782504,
+        "f1_10": 69.92802304439996,
+        "f1_25": 65.0113467869985,
+        "f1_50": 54.5282620711172,
+        "cycle_recall": 0.5,
+        "cycle_precision": 0.7857142857142857,
+        "cycle_time_mae_s": 1.5427283269155574,
+        "deviation_recall": 0.0,
+        "deviation_precision": 0.0,
+        "deviation_type_accuracy": 0.0,
+        "cycles_true": 22,
+        "cycles_found": 14,
+        "cycles_matched": 11,
+        "deviation_true": 0,
+        "deviation_flagged": 7,
+        "deviation_tp": 0,
+        "deviation_typed_right": 0
+      }
+    },
+    "anonymisation_sample": {
+      "leak_rate": 5.592246908885521e-6,
+      "over_redaction": 0.04258022161848813,
+      "frames_leaking_over_5px": 0.0
+    },
+    "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz"
+  },
+  "heldout_first_run": {
+    "recorded_at": "2026-10-30T20:34:10Z",
+    "station_sha256": "4cfd1be52329354360da4decfbba93b6ca4226f5d71a73567f228d4d1fc7b08b",
+    "temporal": {
+      "frame-only": {
+        "accuracy": 0.6829166666666666,
+        "edit": 44.633475291616776,
+        "f1_10": 56.86411963374782,
+        "f1_25": 49.40607183417372,
+        "f1_50": 39.96128508584405,
+        "cycle_recall": 0.22727272727272727,
+        "cycle_precision": 0.625,
+        "cycle_time_mae_s": 3.7159277115922777,
+        "deviation_recall": 0.0,
+        "deviation_precision": 0.0,
+        "deviation_type_accuracy": 0.0,
+        "cycles_true": 22,
+        "cycles_found": 8,
+        "cycles_matched": 5,
+        "deviation_true": 0,
+        "deviation_flagged": 4,
+        "deviation_tp": 0,
+        "deviation_typed_right": 0
+      },
+      "causal-tcn (no augmentation)": {
+        "accuracy": 0.4308333333333334,
+        "edit": 32.889383831412815,
+        "f1_10": 37.056901806157015,
+        "f1_25": 29.117686195640516,
+        "f1_50": 15.871745273433458,
+        "cycle_recall": 0.0,
+        "cycle_precision": 0.0,
+        "cycle_time_mae_s": 0.0,
+        "deviation_recall": 0.0,
+        "deviation_precision": 0.0,
+        "deviation_type_accuracy": 0.0,
+        "cycles_true": 22,
+        "cycles_found": 0,
+        "cycles_matched": 0,
+        "deviation_true": 0,
+        "deviation_flagged": 0,
+        "deviation_tp": 0,
+        "deviation_typed_right": 0
+      },
+      "causal-tcn": {
+        "accuracy": 0.7558333333333334,
+        "edit": 60.386602462426445,
+        "f1_10": 69.84431293390833,
+        "f1_25": 64.1108511484234,
+        "f1_50": 53.916429641863175,
+        "cycle_recall": 0.5454545454545454,
+        "cycle_precision": 0.8,
+        "cycle_time_mae_s": 1.7160609963872984,
+        "deviation_recall": 0.0,
+        "deviation_precision": 0.0,
+        "deviation_type_accuracy": 0.0,
+        "cycles_true": 22,
+        "cycles_found": 15,
+        "cycles_matched": 12,
+        "deviation_true": 0,
+        "deviation_flagged": 8,
+        "deviation_tp": 0,
+        "deviation_typed_right": 0
+      },
+      "offline-transformer": {
+        "accuracy": 0.6945833333333332,
+        "edit": 53.2609371797533,
+        "f1_10": 62.100563786351,
+        "f1_25": 54.69276566071848,
+        "f1_50": 42.89759957436494,
+        "cycle_recall": 0.3181818181818182,
+        "cycle_precision": 0.7777777777777778,
+        "cycle_time_mae_s": 2.846443869893311,
+        "deviation_recall": 1.0,
+        "deviation_precision": 0.2,
+        "deviation_type_accuracy": 0.0,
+        "cycles_true": 22,
+        "cycles_found": 9,
+        "cycles_matched": 7,
+        "deviation_true": 1,
+        "deviation_flagged": 5,
+        "deviation_tp": 1,
+        "deviation_typed_right": 0
+      }
+    },
+    "perception": {
+      "hand_recall": 0.20464532328939108,
+      "hand_precision": 0.9340974212034384,
+      "mota": 0.15022628760495726,
+      "idf1": 0.050954704479897014,
+      "id_switches_per_min": 19.125,
+      "leak_rate": 0.014590579720117049,
+      "over_redaction": 0.07253462044856462,
+      "frames_leaking_over_5px": 0.11041666666666666
+    },
+    "edge_live": {
+      "int8_float_agreement": 0.9875,
+      "accuracy": 0.7566666666666666,
+      "edit": 61.570403625782504,
+      "f1_10": 69.92802304439996,
+      "f1_25": 65.0113467869985,
+      "f1_50": 54.5282620711172,
+      "cycle_recall": 0.5,
+      "cycle_precision": 0.7857142857142857,
+      "cycle_time_mae_s": 1.5427283269155574,
+      "deviation_recall": 0.0,
+      "deviation_precision": 0.0,
+      "deviation_type_accuracy": 0.0,
+      "cycles_true": 22,
+      "cycles_found": 14,
+      "cycles_matched": 11,
+      "deviation_true": 0,
+      "deviation_flagged": 7,
+      "deviation_tp": 0,
+      "deviation_typed_right": 0
+    }
+  }
+}

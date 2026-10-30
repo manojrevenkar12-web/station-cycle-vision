@@ -43,12 +43,29 @@ def standard_of(ep: Episode) -> list[str]:
 
 def evaluate_labels(eps: list[Episode], preds: list[np.ndarray], min_seg: float) -> dict[str, Any]:
     seg = [M.segmentation(p, e.labels) for p, e in zip(preds, eps, strict=True)]
-    proc = [M.process_metrics(process(p, standard_of(e), e.fps, min_seg), e.cycles, e.fps) for p, e in zip(preds, eps, strict=True)]
+    proc = [
+        M.process_metrics(process(p, standard_of(e), e.fps, min_seg), e.cycles, e.fps) for p, e in zip(preds, eps, strict=True)
+    ]
     # segmentation metrics after the same flicker removal the process layer uses
     return {
         **{k: float(np.mean([s[k] for s in seg])) for k in seg[0]},
         **M.summarise_process(proc),
     }
+
+
+def hand_f1(det, eps: list[Episode], threshold: float, match_px: float) -> float:
+    hits = misses = false = 0
+    for ep in eps:
+        heat, off, _ = detect_episode(det, ep)
+        for t in range(len(ep.frames)):
+            found = decode(heat[t, 0], off[t], 2, threshold)
+            pts = np.array([[x, y] for x, y, _ in found]).reshape(-1, 2)
+            gt = ep.hands[t][ep.hand_visible[t]]
+            ok = int((np.linalg.norm(gt[:, None] - pts[None], axis=2).min(1) <= match_px).sum()) if len(gt) and len(pts) else 0
+            hits += ok
+            misses += len(gt) - ok
+            false += max(0, len(pts) - ok)
+    return 2 * hits / max(2 * hits + misses + false, 1)
 
 
 def perception_eval(det, eps: list[Episode], cfg: dict[str, Any]) -> dict[str, Any]:
@@ -74,14 +91,18 @@ def perception_eval(det, eps: list[Episode], cfg: dict[str, Any]) -> dict[str, A
             false += max(0, len(pts) - ok)
             hyp.append(tr.step(t, pts))
         mot.append(mot_metrics(ep.hands, ep.hand_visible, hyp, dcfg["match_px"]))
-        red = np.stack([redact_mask(person[t], cfg["anonymise"]["threshold"], cfg["anonymise"]["dilate_px"]) for t in range(len(person))])
+        red = np.stack(
+            [redact_mask(person[t], cfg["anonymise"]["threshold"], cfg["anonymise"]["dilate_px"]) for t in range(len(person))]
+        )
         leaks.append(leak_metrics(ep.person, red))
     return {
         "hand_recall": hits / max(hits + misses, 1),
         "hand_precision": hits / max(hits + false, 1),
         "mota": float(np.mean([m["mota"] for m in mot])),
         "idf1": float(np.mean([m["idf1"] for m in mot])),
-        "id_switches_per_min": float(sum(m["id_switches"] for m in mot) / max(1, sum(len(e.frames) for e in eps) / (eps[0].fps * 60))),
+        "id_switches_per_min": float(
+            sum(m["id_switches"] for m in mot) / max(1, sum(len(e.frames) for e in eps) / (eps[0].fps * 60))
+        ),
         "leak_rate": float(np.mean([x["leak_rate"] for x in leaks])),
         "over_redaction": float(np.mean([x["over_redaction"] for x in leaks])),
         "frames_leaking_over_5px": float(np.mean([x["frames_leaking_over_5px"] for x in leaks])),
@@ -108,16 +129,28 @@ def run(profile: str = "full", log=print) -> dict[str, Any]:
     log("[encoder] plain and augmented")
     enc = {}
     for name, aug in (("plain", False), ("augmented", True)):
-        with trk.run(f"encoder-{name}", {"augment": aug, "epochs": p["encoder_epochs"], **{k: v for k, v in exp["encoder"].items() if k != "augment"}}):
+        with trk.run(
+            f"encoder-{name}",
+            {"augment": aug, "epochs": p["encoder_epochs"], **{k: v for k, v in exp["encoder"].items() if k != "augment"}},
+        ):
             enc[name] = train_encoder(data["train"], exp["encoder"], p["encoder_epochs"], aug, seed=0)
-    feats = {n: {id(e): encode(m, e) for e in data["train"] + data["val"] + data["onboard_train"] + [x for v in tests.values() for x in v]} for n, m in enc.items()}
+    feats = {
+        n: {
+            id(e): encode(m, e)
+            for e in data["train"] + data["val"] + data["onboard_train"] + [x for v in tests.values() for x in v]
+        }
+        for n, m in enc.items()
+    }
 
     tc = exp["temporal"]
     specs = {
         "frame-only": ("augmented", lambda: FrameOnly(K)),
         "causal-tcn (no augmentation)": ("plain", lambda: CausalTCN(K, tc["hidden"], tc["layers"], tc["stages"])),
         "causal-tcn": ("augmented", lambda: CausalTCN(K, tc["hidden"], tc["layers"], tc["stages"])),
-        "offline-transformer": ("augmented", lambda: OfflineTransformer(K, tc["hidden"], tc["transformer_layers"], tc["transformer_heads"])),
+        "offline-transformer": (
+            "augmented",
+            lambda: OfflineTransformer(K, tc["hidden"], tc["transformer_layers"], tc["transformer_heads"]),
+        ),
     }
     temporal: dict[str, torch.nn.Module] = {}
     for name, (encn, make) in specs.items():
@@ -136,7 +169,9 @@ def run(profile: str = "full", log=print) -> dict[str, Any]:
             preds = [predict_temporal(temporal[name], feats[encn][id(e)]).argmax(1) for e in eps]
             preds_store[name][d] = preds
             results[name][d] = evaluate_labels(eps, preds, min_seg)
-        trk.log_metrics(f"temporal-{name}", {f"{d}_{k}": v for d, r in results[name].items() for k, v in r.items() if isinstance(v, float)})
+        trk.log_metrics(
+            f"temporal-{name}", {f"{d}_{k}": v for d, r in results[name].items() for k, v in r.items() if isinstance(v, float)}
+        )
 
     log("[onboard] one labelled recording of the new station")
     import copy
@@ -145,12 +180,20 @@ def run(profile: str = "full", log=print) -> dict[str, Any]:
     onboard_seqs = [(feats["augmented"][id(e)], e.labels) for e in data["onboard_train"]]
     tuned = train_temporal(tuned, onboard_seqs, {**tc, "lr": tc["lr"] / 4}, max(1, p["temporal_epochs"] // 3), seed=1)
     preds = [predict_temporal(tuned, feats["augmented"][id(e)]).argmax(1) for e in data["onboard_test"]]
-    onboarding = {"zero_shot": results["causal-tcn"]["new_station"], "one_recording": evaluate_labels(data["onboard_test"], preds, min_seg)}
+    onboarding = {
+        "zero_shot": results["causal-tcn"]["new_station"],
+        "one_recording": evaluate_labels(data["onboard_test"], preds, min_seg),
+    }
 
     log("[perception] detector, tracker, anonymiser")
     with trk.run("detector", {"epochs": p["detector_epochs"], **exp["detector"]}):
         det = train_detector(data["train"], exp["detector"], exp["encoder"], p["detector_epochs"], seed=0)
-    pcfg = {"detector": exp["detector"], "tracker": exp["tracker"], "anonymise": svc["anonymise"]}
+    # the peak threshold is chosen on the validation recordings, never on a test set
+    grid = exp["detector"]["threshold_grid"]
+    f1s = {thr: hand_f1(det, data["val"], thr, exp["detector"]["match_px"]) for thr in grid}
+    chosen = max(f1s, key=lambda k: f1s[k])
+    log(f"[perception] peak threshold {chosen} (validation F1 {f1s[chosen]:.3f})")
+    pcfg = {"detector": {**exp["detector"], "peak_threshold": chosen}, "tracker": exp["tracker"], "anonymise": svc["anonymise"]}
     perception = {d: perception_eval(det, eps, pcfg) for d, eps in tests.items()}
 
     # an example timeline for the dashboard: truth and live predictions on one recording per domain
@@ -165,8 +208,10 @@ def run(profile: str = "full", log=print) -> dict[str, Any]:
             "offline": preds_store["offline-transformer"][d][0].tolist(),
             "cycles": [{"start": c.start, "end": c.end, "deviations": c.deviations, "steps": c.steps} for c in e.cycles],
             "standard_work": standard_of(e),
-            "found": [{"start": c.start / e.fps, "end": c.end / e.fps, "deviations": c.deviations, "steps": c.steps}
-                      for c in process(preds_store["causal-tcn"][d][0], standard_of(e), e.fps, min_seg)],
+            "found": [
+                {"start": c.start / e.fps, "end": c.end / e.fps, "deviations": c.deviations, "steps": c.steps}
+                for c in process(preds_store["causal-tcn"][d][0], standard_of(e), e.fps, min_seg)
+            ],
         }
 
     torch.save(enc["augmented"].state_dict(), out_dir / "models" / "encoder.pt")
@@ -198,6 +243,7 @@ def run(profile: str = "full", log=print) -> dict[str, Any]:
         "temporal": results,
         "onboarding": onboarding,
         "perception": perception,
+        "detector_threshold": {"chosen": chosen, "validation_f1": {str(k): v for k, v in f1s.items()}},
         "timelines": timelines,
         "mlflow": trk.summary(),
     }
@@ -205,4 +251,3 @@ def run(profile: str = "full", log=print) -> dict[str, Any]:
         json.dump(res, f, indent=1)
     log(f"[done] {res['seconds']} s")
     return res
-

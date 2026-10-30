@@ -1,0 +1,10 @@
+.grid { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: var(--radius-m); padding: var(--space-4); display: grid; gap: var(--space-3); }
+.title { font-family: var(--font-sign); font-size: var(--text-m); font-weight: 700; }
+.metric { display: grid; gap: var(--space-1); font-size: var(--text-s); }
+.bars { display: grid; gap: 3px; }
+.bar { display: grid; grid-template-columns: 1fr 52px; gap: var(--space-2); align-items: center; }
+.track { height: 10px; background: var(--sunken); border-radius: 5px; overflow: hidden; }
+.fill { height: 100%; border-radius: 5px; }
+.key { display: flex; gap: var(--space-4); font-size: var(--text-s); color: var(--ink-soft); flex-wrap: wrap; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: var(--space-1); vertical-align: middle; }

@@ -1,0 +1,17 @@
+# The camera-box image: ONNX Runtime, FastAPI, no PyTorch. ~200 MB instead of ~2 GB.
+FROM python:3.12.13-slim AS edge
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 SCV_ROOT=/app
+WORKDIR /app
+RUN pip install "numpy>=2.0,<3" "opencv-python-headless>=4.10,<6" "pyyaml>=6" "onnxruntime>=1.20,<2" \
+      "fastapi>=0.115" "uvicorn>=0.30" "prometheus-client>=0.20"
+COPY pyproject.toml ./
+COPY src ./src
+RUN pip install --no-deps .
+COPY config ./config
+COPY models ./models
+COPY heldout/station.yaml ./heldout/station.yaml
+RUN useradd --uid 10001 --create-home scv && mkdir -p /app/data && chown scv /app/data
+USER 10001
+EXPOSE 8080
+HEALTHCHECK --interval=15s --timeout=3s CMD python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8080/healthz').status==200 else 1)"
+CMD ["scv", "serve", "--port", "8080"]
